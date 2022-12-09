@@ -1,0 +1,7 @@
+# py
+env
+.mypy_cache/
+
+# neovim
+*~
+.vim/
