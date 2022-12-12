@@ -1,0 +1,11 @@
+[core]
+	excludesfile = ~/.gitignore
+[pull]
+	rebase = true
+[merge]
+	tool = vimdiff
+[mergetool "vimdiff"]
+	path = nvim
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
