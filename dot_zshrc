@@ -6,8 +6,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cuda/extras/CUPTI/lib64
 #
 export PATH=$HOME/.local/bin:$PATH
 
-eval $(dircolors -b ~/.dircolors)
-
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
