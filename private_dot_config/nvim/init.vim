@@ -49,8 +49,7 @@ endif
 set backupdir-=.
 
 " My nvim config
-let g:python_host_prog = '/usr/bin/python3.7'
-let g:python3_host_prog = '/usr/bin/python3.7'
+" let g:python3_host_prog = '/usr/bin/python'
 
 " Change <ESC> key to fast binding jk
 inoremap jk <ESC>
@@ -105,6 +104,9 @@ set ignorecase
 set smartcase
 nmap \q :nohlsearch<CR>
 
+" Live substitute
+set inccommand=split
+
 " Buffer settings
 nmap <C-e> :e#<CR>
 nmap \n :bnext<CR>
@@ -141,7 +143,7 @@ Plug 'mattn/emmet-vim'
 " Solarized color theme
 Plug 'altercation/vim-colors-solarized'
 Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
 Plug 'scrooloose/nerdcommenter'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -156,6 +158,12 @@ Plug 'keith/swift.vim', {'for': 'swift'}
 " Javascript
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'ryanoasis/vim-devicons'
+
+" Markdown preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" Format table
+Plug 'junegunn/vim-easy-align'
+
 " Add plugins to &runtimepath
 call plug#end()
 
@@ -250,6 +258,9 @@ endfunction
 
 " NERDCommenter
 let NERDSpaceDelims = 1
+" Do not remember why I has added the following two lines.
+let g:NERDCustomDelimiters = {'python': {'left': '#'}}
+let NERDDefaultAlign="left"
 
 " FZF
 function! s:buflist()
@@ -270,7 +281,11 @@ nnoremap <silent> <leader>; :call fzf#run({
 \   'down':    len(<sid>buflist()) + 2
 \ })<CR>
 
-nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <silent> <C-p> :call fzf#run({
+\   'source': 'find . -path "*/\.*" -prune -o -type f -print -o -type l -print \| sed s/^..//',
+\   'sink': 'e',
+\   'down': '35%'
+\ })<CR>
 
 " Pane switching
 nnoremap <c-j> <c-w>j
@@ -278,15 +293,16 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" Cursor for Terminal on macOS (works on ubuntu 18.04)
+" Change cursor shape in different modes for Terminal on macOS
+" (works on Linux too)
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
 
 " Solarized color theme
-set background=light
 " let g:solarized_termcolors=256
+set background=light
 " silent! colorscheme solarized
 
 
@@ -294,7 +310,11 @@ set background=light
 autocmd FileType html setlocal ts=2 sts=2 sw=2
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2
 autocmd FileType cpp setlocal ts=2 sts=2 sw=2
+autocmd FileType json setlocal ts=2 sts=2 sw=2
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2
 
+" Format table
+au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 
 " coc.nvim
 " Install extensions.
@@ -336,7 +356,7 @@ function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 " Highlight symbol under cursor on CursorHold
@@ -369,3 +389,5 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " use `:OR` for organize import of current buffer
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+autocmd FileType python let b:coc_root_patterns = ['.git', 'env', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
