@@ -140,8 +140,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " Zen coding, HTML, XML, etc
 Plug 'mattn/emmet-vim'
-" Solarized color theme
-Plug 'altercation/vim-colors-solarized'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': { -> fzf#install() } }
 Plug 'scrooloose/nerdcommenter'
@@ -258,9 +256,6 @@ endfunction
 
 " NERDCommenter
 let NERDSpaceDelims = 1
-" Do not remember why I has added the following two lines.
-let g:NERDCustomDelimiters = {'python': {'left': '#'}}
-let NERDDefaultAlign="left"
 
 " FZF
 function! s:buflist()
@@ -300,10 +295,17 @@ let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
 
-" Solarized color theme
-" let g:solarized_termcolors=256
+" Colors
 set background=light
-" silent! colorscheme solarized
+" Make nicer warning and hint colors, by deefault they are not well readable
+" (thought it partially depends on terminal color scheme).
+" By default: highlight DiagnosticWarn ctermfg=3
+highlight DiagnosticWarn ctermfg=130
+" By default: highlight DiagnosticHint ctermfg=7
+highlight DiagnosticHint ctermfg=242
+" By default: highlight Conceal ctermfg=7 ctermbg=242
+highlight Conceal cterm=undercurl ctermfg=243 ctermbg=231
+
 
 
 " spaces
