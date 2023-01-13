@@ -4,3 +4,7 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+[".config/emacs"]
+    type = "git-repo"
+    url = "https://github.com/SnichOne/dotemacs"
+    refreshPeriod = "24h"
