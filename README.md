@@ -9,7 +9,7 @@
             name = "Name me"
             email = "email@address.org"
 
-3. Run `chezmoi init --apply $GITHUB_USERNAME`.
+3. Run `chezmoi init --apply SnichOne`.
 
 
 ## Basic usage
