@@ -1,11 +1,4 @@
-{{ if eq .chezmoi.os "linux" -}}
-{{   if eq .chezmoi.osRelease.id "arch" -}}
-{{/* Arch Linux specific code. */ -}}
 #!/usr/bin/env sh
-# Install Neovim and coc.nvim dependencies: python and nodejs.
-sudo pacman -S neovim python python-pip nodejs
-{{   end -}}
-{{ end }}
 
 # Create Neovim 'backupdir'.
 mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}"/nvim/backup/

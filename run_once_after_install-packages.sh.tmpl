@@ -1,0 +1,20 @@
+{{ if eq .chezmoi.os "linux" -}}
+{{   if eq .chezmoi.osRelease.id "arch" -}}
+{{/* Arch Linux specific code. */ -}}
+#!/usr/bin/env sh
+# Install:
+# 1. zsh
+# 2. direnv
+# 3. kitty
+# 4. mpv
+# 5. parallel
+# 6. bat
+# 7. tmux
+# 8. Neovim and coc.nvim dependencies: python and nodejs.
+# 9. Emacs
+# 10. pandoc
+sudo pacman -S zsh direnv kitty mpv bat neovim python python-pip\
+     nodejs emacs-nativecomp pandoc
+{{   end -}}
+{{ end }}
+
