@@ -48,7 +48,7 @@ These are automatically installed on Arch Linux using the
 
 ## Scripts
 
-1. `run_once_after_install-packages.sh` automatically installs [optional
+1. `run_once_before_install-packages.sh` automatically installs [optional
    dependencies](#optional-dependencies) if the operating system is Arch Linux.
 2. `run_once_after_install-nvim-plugins.sh` automatically installs Neovim
    plugins through [vim-plug](https://github.com/junegunn/vim-plug).
