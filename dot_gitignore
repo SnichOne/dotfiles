@@ -1,7 +1,14 @@
-# py
+# Python
 env
 .mypy_cache/
 
-# vim/neovim
+# Vim/neovim
 *~
 .vim/
+
+# Emacs
+.dir-locals.el
+
+# direnv
+.envrc
+.direnv/

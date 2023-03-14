@@ -199,3 +199,12 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# Direnv configuration. direnv is an extension for your shell. It augments
+# existing shells with a new feature that can load and unload environment
+# variables depending on the current directory.
+
+# For direnv to work properly it needs to be hooked into the shell.
+eval "$(direnv hook zsh)"
+# It is recommended to wrap tmux to avoid issues with environment loading.
+# Source: https://github.com/direnv/direnv/wiki/Tmux
+alias tmux='direnv exec / tmux'

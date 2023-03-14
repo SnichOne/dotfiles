@@ -59,3 +59,38 @@ Excerpt from chezmoi's documentation:
   before.
 - Scripts with `before_`/`after_` in prefix are run before/after the dotfiles
   are updated
+
+## Use cases
+
+### Python virtual environments
+
+In general, there are many tools to manage virtual environments for Python
+runtime, e.g., built-in [venv](https://docs.python.org/3/library/venv.html) (in Python 3.3+),
+[poetry](https://python-poetry.org/),
+[pipenv](https://pipenv.pypa.io/en/latest/), [conda](https://conda.io/).
+
+So I wanted to have a convenient uniform interface to all of them. And it seems
+that [direnv](https://direnv.net/) covers that and works on a per-project basis.
+
+To manage virtual environment for a project with direnv, you need to create an
+`.envrc` file in the project root directory. E.g., if the project is managed by
+`venv` then the `.envrc` should contain:
+
+    layout python
+
+The first time the .envrc is loaded it will automatically create the virtualenv
+under .direnv/python-$python_version. The sandbox is also automatically
+activated whenever direnv loads the .envrc file (although the prompt won't
+change by default, however see [here](https://github.com/direnv/direnv/wiki/PS1)
+or [here](https://github.com/direnv/direnv/wiki/Python#restoring-the-ps1)).
+
+It is also possible to integrate direnv with Emacs or Vim.
+
+For more, see [direnv wiki](https://github.com/direnv/direnv/wiki/Python#restoring-the-ps1).
+
+
+## Ideas for possible improvements
+
+- The [asdf](https://asdf-vm.com/) tool seems to be interesting, it supports
+  multiple runtime environments on a per-project basis. It is like gvm, nvm,
+  rbenv & pyenv (and more) but all in one tool.
