@@ -67,6 +67,15 @@ unsetopt  BEEP
 
 export VISUAL=nvim
 
+# Emacs TRAMP may have issues parsing complex prompt. Let's change the prompt
+# to just "$ ".
+if [[ "$TERM" == "dumb" ]]; then
+  unset zle_bracketed_paste
+  unset zle
+  PS1='$ '
+  return
+fi
+
 # n (Node version manager) install path
 export N_PREFIX=$HOME/.local
 # export XDG_CONFIG_HOME=$HOME/.config
