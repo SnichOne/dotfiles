@@ -736,7 +736,7 @@ font_size 12
 #: --login to ensure that the shell starts in interactive mode and
 #: reads its startup rc files.
 
-editor nvim
+editor .
 
 #: The console editor to use when editing the kitty config file or
 #: similar tasks. A value of . means to use the environment variables
