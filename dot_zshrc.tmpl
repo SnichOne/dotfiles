@@ -6,9 +6,20 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cuda/extras/CUPTI/lib64
 #
 export PATH=$HOME/.local/bin:$PATH
 
-{{- if eq .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" -}}
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export MANPATH=/opt/local/share/man:${MANPATH:+:${MANPATH}}
+{{- end }}
+
+{{ if eq .email "sergey.nichiporchik@zendesk.com" -}}
+# Zendesk start
+export ARTIFACTORY_USERNAME={{ pass "ARTIFACTORY_USERNAME" }}
+export ARTIFACTORY_API_KEY={{ pass "ARTIFACTORY_API_KEY" }}
+export POETRY_HTTP_BASIC_ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME
+export POETRY_HTTP_BASIC_ARTIFACTORY_PASSWORD=$ARTIFACTORY_API_KEY
+
+. "$HOME/.asdf/asdf.sh"
+# Zendesk end
 {{- end }}
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -201,6 +212,7 @@ bindkey "^[F" vi-forward-word
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+{{ if eq .chezmoi.os "linux" -}}
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/snich/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -215,6 +227,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+{{- end }}
 
 # Direnv configuration. direnv is an extension for your shell. It augments
 # existing shells with a new feature that can load and unload environment
