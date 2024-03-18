@@ -42,3 +42,15 @@ layout_poetry() {
     export POETRY_ACTIVE=1
     export VIRTUAL_ENV
 }
+
+
+# Ruby
+# Source: https://direnv.net/docs/ruby.html
+# Usage: use ruby <version>
+#
+# Loads the specified ruby version into the environment
+use_ruby() {
+  local ruby_dir=$HOME/.rubies/ruby-$1
+  load_prefix $ruby_dir
+  layout ruby
+}

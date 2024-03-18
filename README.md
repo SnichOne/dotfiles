@@ -8,6 +8,7 @@
         [data]
             name = "Name me"
             email = "email@address.org"
+            github_user = "GitHub username"  # Optional (used for Magit Forge)
 
     This data will be used to configure `.gitconfig`.
 3.  Run `chezmoi init --apply SnichOne`.
