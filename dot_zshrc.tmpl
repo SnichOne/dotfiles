@@ -6,12 +6,15 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cuda/extras/CUPTI/lib64
 #
 export PATH=$HOME/.local/bin:$PATH
 
-{{ if eq .chezmoi.os "darwin" -}}
+{{- if eq .chezmoi.os "darwin" }}
+
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export MANPATH=/opt/local/share/man:${MANPATH:+:${MANPATH}}
+
 {{- end }}
 
-{{ if eq .email "sergey.nichiporchik@zendesk.com" -}}
+{{- if eq (index (splitList "@" .email) 1) "zendesk.com" }}
+
 # Zendesk start
 export ARTIFACTORY_USERNAME={{ pass "ARTIFACTORY_USERNAME" }}
 export ARTIFACTORY_API_KEY={{ pass "ARTIFACTORY_API_KEY" }}
@@ -20,6 +23,7 @@ export POETRY_HTTP_BASIC_ARTIFACTORY_PASSWORD=$ARTIFACTORY_API_KEY
 
 . "$HOME/.asdf/asdf.sh"
 # Zendesk end
+
 {{- end }}
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -209,10 +213,63 @@ bindkey "^[B" vi-backward-word
 bindkey "^[D" vi-forbard-kill-word
 bindkey "^[F" vi-forward-word
 
+# ZSH integration with system clipboard.
+# TODO: current version is an initial attempt, use `bingkey -M emacs` to get all relevant keybingings,
+# take into consideration, that I remapped word killing in emacs mode to behave
+# as in vi mode (see above section).
+# Source: https://unix.stackexchange.com/questions/51933/zsh-copy-and-paste-like-emacs
+{{ if eq .chezmoi.os "darwin" -}}
+
+# Make ESC-w (a.k.a. Meta-w or Option-w) copy to the macOS pasteboard as well
+# as the zsh built-in clipboard.
+pb-copy-region-as-kill () {
+  zle copy-region-as-kill
+  print -rn $CUTBUFFER | pbcopy
+}
+zle -N pb-copy-region-as-kill
+bindkey -e '\ew' pb-copy-region-as-kill
+
+# Code for Ctrl-u and Ctrl-k too.
+pb-backward-kill-line () {
+  zle backward-kill-line
+  print -rn $CUTBUFFER | pbcopy
+}
+zle -N pb-backward-kill-line
+bindkey -e '^u' pb-backward-kill-line
+pb-kill-line () {
+  zle kill-line
+  print -rn $CUTBUFFER | pbcopy
+}
+zle -N pb-kill-line
+bindkey -e '^k' pb-kill-line
+
+{{- else if eq .chezmoi.os "linux" -}}
+
+x-copy-region-as-kill () {
+  zle copy-region-as-kill
+  print -rn $CUTBUFFER | xsel -i -b
+}
+zle -N x-copy-region-as-kill
+x-kill-region () {
+  zle kill-region
+  print -rn $CUTBUFFER | xsel -i -b
+}
+zle -N x-kill-region
+x-yank () {
+  CUTBUFFER=$(xsel -o -b </dev/null)
+  zle yank
+}
+zle -N x-yank
+bindkey -e '\ew' x-copy-region-as-kill
+bindkey -e '^W' x-kill-region
+bindkey -e '^Y' x-yank
+
+{{- end }}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-{{ if eq .chezmoi.os "linux" -}}
+{{- if eq .chezmoi.os "linux" }}
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/snich/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -227,6 +284,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
 {{- end }}
 
 # Direnv configuration. direnv is an extension for your shell. It augments
