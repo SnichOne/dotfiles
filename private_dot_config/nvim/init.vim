@@ -297,6 +297,7 @@ let &t_EI = "\<Esc>[2 q"
 
 " Colors
 set background=light
+colorscheme vim
 " Make nicer warning and hint colors, by deefault they are not well readable
 " (thought it partially depends on terminal color scheme).
 " By default: highlight DiagnosticWarn ctermfg=3
