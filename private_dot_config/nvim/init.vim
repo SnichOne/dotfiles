@@ -162,6 +162,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 " Format table
 Plug 'junegunn/vim-easy-align'
 
+" Colorscheme
+Plug 'miikanissi/modus-themes.nvim'
+
 " Add plugins to &runtimepath
 call plug#end()
 
@@ -297,7 +300,7 @@ let &t_EI = "\<Esc>[2 q"
 
 " Colors
 set background=light
-colorscheme vim
+colorscheme modus
 " Make nicer warning and hint colors, by deefault they are not well readable
 " (thought it partially depends on terminal color scheme).
 " By default: highlight DiagnosticWarn ctermfg=3
