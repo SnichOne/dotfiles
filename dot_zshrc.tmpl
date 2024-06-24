@@ -218,8 +218,6 @@ bindkey "^[F" vi-forward-word
 # take into consideration, that I remapped word killing in emacs mode to behave
 # as in vi mode (see above section).
 # Source: https://unix.stackexchange.com/questions/51933/zsh-copy-and-paste-like-emacs
-{{ if eq .chezmoi.os "darwin" -}}
-
 # Make ESC-w (a.k.a. Meta-w or Option-w) copy to the macOS pasteboard as well
 # as the zsh built-in clipboard.
 pb-copy-region-as-kill () {
@@ -228,43 +226,6 @@ pb-copy-region-as-kill () {
 }
 zle -N pb-copy-region-as-kill
 bindkey -e '\ew' pb-copy-region-as-kill
-
-# Code for Ctrl-u and Ctrl-k too.
-pb-backward-kill-line () {
-  zle backward-kill-line
-  print -rn $CUTBUFFER | pbcopy
-}
-zle -N pb-backward-kill-line
-bindkey -e '^u' pb-backward-kill-line
-pb-kill-line () {
-  zle kill-line
-  print -rn $CUTBUFFER | pbcopy
-}
-zle -N pb-kill-line
-bindkey -e '^k' pb-kill-line
-
-{{- else if eq .chezmoi.os "linux" -}}
-
-x-copy-region-as-kill () {
-  zle copy-region-as-kill
-  print -rn $CUTBUFFER | xsel -i -b
-}
-zle -N x-copy-region-as-kill
-x-kill-region () {
-  zle kill-region
-  print -rn $CUTBUFFER | xsel -i -b
-}
-zle -N x-kill-region
-x-yank () {
-  CUTBUFFER=$(xsel -o -b </dev/null)
-  zle yank
-}
-zle -N x-yank
-bindkey -e '\ew' x-copy-region-as-kill
-bindkey -e '^W' x-kill-region
-bindkey -e '^Y' x-yank
-
-{{- end }}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
