@@ -6,10 +6,12 @@ export ARTIFACTORY_USERNAME={{ pass "ARTIFACTORY_USERNAME" }}
 export ARTIFACTORY_API_KEY={{ pass "ARTIFACTORY_API_KEY" }}
 export POETRY_HTTP_BASIC_ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME
 export POETRY_HTTP_BASIC_ARTIFACTORY_PASSWORD=$ARTIFACTORY_API_KEY
+export SCOOTER_GITHUB_TOKEN={{ pass "GITHUB_API_TOKEN" }}
+export SCOOTER_KUBERNETES_CONTEXT="scooter-euc1"
 
-# Initialize completion before loading kubectl stuff.
-autoload -Uz compinit && compinit
-source $HOME/src/kubectl_config/dotfiles/kubectl_stuff.bash
+if [[ -z $TMUX ]]; then
+    export PATH=/usr/local/bin${PATH:+:${PATH}}
+fi
 
 # Zendesk end   --------------------------------------------------
 

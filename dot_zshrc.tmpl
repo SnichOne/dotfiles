@@ -14,6 +14,15 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+{{ if eq (index (splitList "@" .email) 1) "zendesk.com" -}}
+# Zendesk start --------------------------------------------------
+# Initialize completion before loading kubectl stuff.
+autoload -Uz compinit && compinit
+source $HOME/src/kubectl_config/dotfiles/kubectl_stuff.bash
+source $ZENDESK_CODE_DIR/scooter/scripts/shell/scooter.sh
+# Zendesk end   --------------------------------------------------
+{{- end }}
+
 setopt    appendhistory     #Append history to the history file (no overwriting)
 setopt    sharehistory      #Share history across terminals
 setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
