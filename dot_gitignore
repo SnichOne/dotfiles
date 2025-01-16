@@ -12,3 +12,6 @@ env
 # direnv
 .envrc
 .direnv/
+
+# Mac
+.DS_Store
