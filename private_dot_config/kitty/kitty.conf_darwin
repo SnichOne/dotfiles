@@ -424,7 +424,7 @@ open_url_with default
 #: that setting a non-zero window margin overrides this and causes all
 #: borders to be drawn.
 
-# window_margin_width 0
+window_margin_width 2 6 6
 
 #: The window margin (in pts) (blank area outside the border). A
 #: single value sets all four sides. Two values set the vertical and
@@ -1034,7 +1034,7 @@ kitty_mod cmd
 # map kitty_mod+page_down scroll_page_down
 # map kitty_mod+home      scroll_home
 # map kitty_mod+end       scroll_end
-# map kitty_mod+h         show_scrollback
+map ctrl+shift+h         show_scrollback
 
 #: You can pipe the contents of the current screen + history buffer as
 #: STDIN to an arbitrary program using the ``launch`` function. For
