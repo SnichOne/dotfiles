@@ -1,14 +1,26 @@
 [core]
-	excludesfile = ~/.gitignore
-	quotepath = off                 ; Do not quote unicode characters in paths in commands like `git status`
+    excludesfile = ~/.gitignore
+    quotepath = off                 ; Do not quote unicode characters in paths in commands like `git status`
+    pager = delta
+[interactive]
+    diffFilter = delta --color-only
 [pull]
-	rebase = true
+    rebase = true
 [merge]
-	tool = vimdiff
+    tool = vimdiff
 [mergetool "vimdiff"]
-	path = nvim
+    path = nvim
 [user]
-	name = {{ .name }}
-	email = {{ .email }}
+    name = {{ .name }}
+    email = {{ .email }}
 [github]
-	user = {{ .github_user }}
+    user = {{ .github_user }}
+[filter "lfs"]
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+[delta]
+    side-by-side = true
+    hunk-header-style = omit
+    navigate = true
