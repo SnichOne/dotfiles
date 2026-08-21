@@ -14,14 +14,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-{{ if eq (index (splitList "@" .email) 1) "zendesk.com" -}}
-# Zendesk start --------------------------------------------------
-# Initialize completion before loading kubectl stuff.
-autoload -Uz compinit && compinit
-source $HOME/src/kubectl_config/dotfiles/kubectl_stuff.bash
-source $ZENDESK_CODE_DIR/scooter/scripts/shell/scooter.sh
-source $ZENDESK_CODE_DIR/kubectl_config/dotfiles/kubectl_stuff.bash
-# Zendesk end   --------------------------------------------------
+{{ with index . "private_zshrc_pass_entry" -}}
+{{- passRaw . }}
 {{- end }}
 
 setopt    appendhistory     #Append history to the history file (no overwriting)

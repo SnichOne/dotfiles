@@ -2,6 +2,4 @@ README.md
 
 
 # Oh My Zsh
-.oh-my-zsh/cache/.zsh-update
-.oh-my-zsh/cache/completions
-.oh-my-zsh/cache/grep-alias
+.oh-my-zsh/cache/**

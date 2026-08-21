@@ -28,6 +28,21 @@
 
 For more, see [chezmoi User Guide](https://www.chezmoi.io/user-guide/command-overview/).
 
+## Private shell fragments
+
+Optional shell fragments can be loaded from `pass` entries without recording
+their contents or entry paths in this repository. Add local-only data to
+`~/.config/chezmoi/chezmoi.toml`:
+
+    [data]
+        private_zshenv_pass_entry = "private/shell/zshenv"
+        private_zshrc_pass_entry = "private/shell/zshrc"
+
+Store the complete shell snippets as multiline entries in `pass`. The entries
+are rendered directly into the corresponding shell files. This requires
+`pass` and a configured GPG key. `pass` is local by default; synchronize its
+encrypted password-store separately, using only storage approved for the data.
+
 
 ## Prerequisites
 
